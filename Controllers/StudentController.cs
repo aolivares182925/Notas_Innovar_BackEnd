@@ -18,12 +18,12 @@ namespace NotasAPI.Controllers
         }
         //Get Student
         [HttpGet]
-        public IEnumerable<Student> GetStudents(){
+        public IEnumerable<Student> Get(){
             return _context.Students.ToList();
         }
         //Get one student
         [HttpGet("{id}")]
-        public Student? GetStudent(long id){
+        public Student? Get(long id){
             var student = _context.Students.Find(id);
             return student;
         }
@@ -36,7 +36,7 @@ namespace NotasAPI.Controllers
         }
         //Update Student
         [HttpPut]
-        public Student? UpdateStudent(Student student){
+        public Student? Update(Student student){
             var studentDbo = _context.Students.Find(student.Id);
 
             if(studentDbo == null) return null;
@@ -47,7 +47,7 @@ namespace NotasAPI.Controllers
         }
         //Delete Student
         [HttpDelete("{id}")]
-        public bool DeleteStudent(long id){
+        public bool Delete(long id){
             var studentDbo = _context.Students.Find(id);
             if(studentDbo==null) return false;
 

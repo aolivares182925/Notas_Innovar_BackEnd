@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NotasAPI.Modules
 {
-    public class Alternatives
+    public class Alternative
     {
         public long Id {get;set;}
         public long IdQuestion {get;set;}

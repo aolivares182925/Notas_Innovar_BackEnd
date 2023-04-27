@@ -12,6 +12,8 @@ namespace NotasAPI.Modules
         [Key]
         public long Id {get;set;}
         public string Name {get;set;}
+
+        
         public long IdAcademicDepartment {get;set;}
 
         [ForeignKey(nameof(IdAcademicDepartment))]

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace NotasAPI.Modules
 {
-    public class Questions
+    public class Question
     {
         public long Id {get;set;}
-        public string Question {get;set;}
+        public string TextQuestion {get;set;}
         public string IdExam {get;set;}
 
     }
