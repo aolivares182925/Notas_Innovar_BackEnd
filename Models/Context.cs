@@ -12,6 +12,7 @@ namespace NotasAPI.Modules
 
 
         }
+
         public DbSet<Student> Students {get;set;}
     }
 }
