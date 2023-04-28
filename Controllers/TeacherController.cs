@@ -53,10 +53,10 @@ namespace NotasAPI.Controllers
         //Delete beer
         [HttpDelete("{id}")]
         public bool Delete(long id){
-            var semesterDbo = _context.Semesters.Find(id);
-            if(semesterDbo==null) return false;
+            var teacherDbo = _context.Teachers.Find(id);
+            if(teacherDbo==null) return false;
 
-            _context.Semesters.Remove(semesterDbo);
+            _context.Teachers.Remove(teacherDbo);
             _context.SaveChanges();
             return true;
         }

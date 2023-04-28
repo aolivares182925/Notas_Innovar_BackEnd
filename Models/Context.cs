@@ -20,7 +20,6 @@ namespace NotasAPI.Modules
         public DbSet<Answer> Answers {get;set;}
         public DbSet<Chapter> Chapters {get;set;}
         public DbSet<Course> Courses {get;set;}
-        public DbSet<CourseRegistration> CourseRegistrations {get;set;}
         public DbSet<Exam> Exams {get;set;}
         public DbSet<Question> Questions {get;set;}
         public DbSet<Registration> Registrations {get;set;}

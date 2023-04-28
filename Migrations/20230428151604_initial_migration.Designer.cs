@@ -12,7 +12,7 @@ using NotasAPI.Modules;
 namespace NotasAPI.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230428142009_initial_migration")]
+    [Migration("20230428151604_initial_migration")]
     partial class initial_migration
     {
         /// <inheritdoc />

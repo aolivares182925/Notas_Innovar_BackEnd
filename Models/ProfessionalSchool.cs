@@ -19,5 +19,7 @@ namespace NotasAPI.Modules
         [ForeignKey(nameof(IdAcademicDepartment))]
         public AcademicDepartment? AcademicDepartment {get;set;}
 
+        public ICollection<Registration>? Registrations {get;set;}
+
     }
 }

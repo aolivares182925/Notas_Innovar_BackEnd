@@ -13,6 +13,7 @@ namespace NotasAPI.Modules
         public string Name {get;set;}
         public string DateStart {get;set;}
         public string DateFinish {get;set;}
+        
         public ICollection<Registration>? Registrations {get;set;}
     }
 }
