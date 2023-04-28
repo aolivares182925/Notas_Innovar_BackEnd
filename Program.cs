@@ -11,10 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<Context>(opt =>
-    opt.UseInMemoryDatabase("Student")
+ builder.Services.AddDbContext<Context>(opt => 
+        opt.UseSqlServer(builder.Configuration.GetConnectionString("connection_sql"))
+    );
 
-); 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
