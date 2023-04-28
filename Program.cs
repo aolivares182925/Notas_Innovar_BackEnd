@@ -1,6 +1,8 @@
 using NotasAPI.Modules;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using NotasAPI.BusinessService;
+using NotasAPI.DataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,16 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+
+//llamada a la capa Business Service
+builder.Services.AddTransient<AcademicDepartmentBusinessService>();
+
+//llamada a la capa DataService
+builder.Services.AddTransient<AcademicDepartmentDataService>();
+
+
+
 
 var app = builder.Build();
 

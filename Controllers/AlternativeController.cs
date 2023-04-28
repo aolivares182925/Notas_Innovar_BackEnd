@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NotasAPI.Controllers
 {
-    public class AlternativeController
+    [ApiController]
+    [Route("[controller]")]
+    public class AlternativeController:ControllerBase
     {
         
     }

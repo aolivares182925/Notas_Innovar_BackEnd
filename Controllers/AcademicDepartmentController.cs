@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NotasAPI.Modules;
 using Microsoft.EntityFrameworkCore;
+using NotasAPI.BusinessService;
 
 namespace NotasAPI.Controllers
 {
@@ -12,55 +13,110 @@ namespace NotasAPI.Controllers
     [Route("[controller]")]
     public class AcademicDepartmentController:ControllerBase
     {
-        private Context _context;
-        public AcademicDepartmentController(Context context)
+        private AcademicDepartmentBusinessService _AcDeBusinessService;
+        public AcademicDepartmentController(AcademicDepartmentBusinessService AcDeBusinessService)
         {
-            _context = context;
+            _AcDeBusinessService = AcDeBusinessService;
         }
-        // Get Beers
+        //Get todos
         [HttpGet]
-        public IEnumerable<AcademicDepartment> Get(){
-            return _context.AcademicDepartments.Include(PS => PS.ProfessionalSchools).ToList();
+        public List<AcademicDepartment> Get(){
+            return _AcDeBusinessService.Get();
         }
-
-
-        //Get one beer
+        //Get by id
         [HttpGet("{id}")]
         public AcademicDepartment? Get(long id){
-            var academicDepartment = _context.AcademicDepartments.Find(id);
-            return academicDepartment;
+            return _AcDeBusinessService.Get(id);
         }
-
         //Insert Beer
         [HttpPost]
-        public AcademicDepartment Insert(AcademicDepartment academicDepartment){
-            _context.AcademicDepartments.Add(academicDepartment);
-            _context.SaveChanges();
-            return academicDepartment;
+        public AcademicDepartment? Insert(AcademicDepartment acDe){
+            return _AcDeBusinessService.Insert(acDe);
         }
 
         //Update beer
         [HttpPut]
-        public AcademicDepartment? Update(AcademicDepartment academicDepartment){
-            var academicDepartmentDbo = _context.AcademicDepartments.Find(academicDepartment.Id);
-
-            if(academicDepartmentDbo == null) return null;
-
-            academicDepartmentDbo.Name = academicDepartment.Name;
-            _context.SaveChanges();
-            return academicDepartmentDbo;
+        public AcademicDepartment? Update(AcademicDepartment acDe){
+            return _AcDeBusinessService.Update(acDe);
         }
 
         //Delete beer
         [HttpDelete("{id}")]
         public bool Delete(long id){
-            var academicDepartmentDbo = _context.AcademicDepartments.Find(id);
-            if(academicDepartmentDbo==null) return false;
-
-            _context.AcademicDepartments.Remove(academicDepartmentDbo);
-            _context.SaveChanges();
-            return true;
+            return _AcDeBusinessService.Delete(id);
         }
+
+        [HttpPost("[action]")]
+        public List<AcademicDepartment> GetADByName(string name){
+            return _AcDeBusinessService.GetADByName(name);
+        }
+
+        [HttpPost("[action]")]
+        public List<AcademicDepartment> GetADWhitProfSchools(){
+            return _AcDeBusinessService.GetADWhitProfSchools();
+        }
+
+        //Get beer names
+        [HttpPost("[action]")]
+        public List<string> GetAcDeNames(){
+            return _AcDeBusinessService.GetAcDeNames();
+        }
+        
+        //Get beer names upper case
+        [HttpPost("[action]")]
+        public List<string> GetAcDeNamesUpperCase(){
+            return _AcDeBusinessService.GetAcDeNamesUpperCase();
+        }
+
+        // private Context _context;
+        // public AcademicDepartmentController(Context context)
+        // {
+        //     _context = context;
+        // }
+        // // Get Beers
+        // [HttpGet]
+        // public IEnumerable<AcademicDepartment> Get(){
+        //     return _context.AcademicDepartments.Include(PS => PS.ProfessionalSchools).ToList();
+        // }
+
+
+        // //Get one beer
+        // [HttpGet("{id}")]
+        // public AcademicDepartment? Get(long id){
+        //     var academicDepartment = _context.AcademicDepartments.Find(id);
+        //     return academicDepartment;
+        // }
+
+        // //Insert Beer
+        // [HttpPost]
+        // public AcademicDepartment Insert(AcademicDepartment academicDepartment){
+        //     _context.AcademicDepartments.Add(academicDepartment);
+        //     _context.SaveChanges();
+        //     return academicDepartment;
+        // }
+
+        // //Update beer
+        // [HttpPut]
+        // public AcademicDepartment? Update(AcademicDepartment academicDepartment){
+        //     var academicDepartmentDbo = _context.AcademicDepartments.Find(academicDepartment.Id);
+
+        //     if(academicDepartmentDbo == null) return null;
+
+        //     academicDepartmentDbo.Name = academicDepartment.Name;
+        //     _context.SaveChanges();
+        //     return academicDepartmentDbo;
+        // }
+
+        // //Delete beer
+        // [HttpDelete("{id}")]
+        // public bool Delete(long id){
+        //     var academicDepartmentDbo = _context.AcademicDepartments.Find(id);
+        //     if(academicDepartmentDbo==null) return false;
+
+        //     _context.AcademicDepartments.Remove(academicDepartmentDbo);
+        //     _context.SaveChanges();
+        //     return true;
+        // }
 
     }
 }
