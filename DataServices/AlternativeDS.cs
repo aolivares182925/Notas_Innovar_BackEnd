@@ -41,7 +41,15 @@ namespace NotasAPI.DataServices
 
 
             _context.SaveChanges();
-            return alternative;
+            return alternativeDbo;
+        }
+        public bool Delete(long Id){
+            var alternativeDbo = _context.Alternatives.Find(Id);
+            if(alternativeDbo == null) return false;
+
+            _context.Alternatives.Remove(alternativeDbo);
+            _context.SaveChanges();
+            return true;
         }
 
         

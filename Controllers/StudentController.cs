@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NotasAPI.BusinessService;
 using NotasAPI.Modules;
 
 namespace NotasAPI.Controllers
@@ -12,49 +13,81 @@ namespace NotasAPI.Controllers
     [Route("[controller]")]
     public class StudentController : ControllerBase
     {
-        private Context _context;
-        public StudentController(Context context){
-            _context = context;
+        private StudentBS _StudentBS;
+        public StudentController(StudentBS StudentBS)
+        {
+            _StudentBS = StudentBS;
         }
-        //Get Student
+        //Get todos
         [HttpGet]
-        public IEnumerable<Student> Get(){
-            return _context.Students.ToList();
+        public List<Student> Get(){
+            return _StudentBS.Get();
         }
-        //Get one student
+        //Get by id
         [HttpGet("{id}")]
         public Student? Get(long id){
-            var student = _context.Students.Find(id);
-            return student;
+            return _StudentBS.Get(id);
         }
-        //Insert Student
+        //Insert Beer
         [HttpPost]
-        public Student Post(Student student){
-            _context.Students.Add(student);
-            _context.SaveChanges();
-            return student;
+        public Student? Insert(Student acDe){
+            return _StudentBS.Insert(acDe);
         }
-        //Update Student
+
+        //Update beer
         [HttpPut]
-        public Student? Update(Student student){
-            var studentDbo = _context.Students.Find(student.Id);
-
-            if(studentDbo == null) return null;
-
-            studentDbo.Name = student.Name;
-            _context.SaveChanges();
-            return studentDbo;
+        public Student? Update(Student acDe){
+            return _StudentBS.Update(acDe);
         }
-        //Delete Student
+
+        //Delete beer
         [HttpDelete("{id}")]
         public bool Delete(long id){
-            var studentDbo = _context.Students.Find(id);
-            if(studentDbo==null) return false;
-
-            _context.Students.Remove(studentDbo);
-            _context.SaveChanges();
-            return true;
+            return _StudentBS.Delete(id);
         }
+        // private Context _context;
+        // public StudentController(Context context){
+        //     _context = context;
+        // }
+        // //Get Student
+        // [HttpGet]
+        // public IEnumerable<Student> Get(){
+        //     return _context.Students.ToList();
+        // }
+        // //Get one student
+        // [HttpGet("{id}")]
+        // public Student? Get(long id){
+        //     var student = _context.Students.Find(id);
+        //     return student;
+        // }
+        // //Insert Student
+        // [HttpPost]
+        // public Student Post(Student student){
+        //     _context.Students.Add(student);
+        //     _context.SaveChanges();
+        //     return student;
+        // }
+        // //Update Student
+        // [HttpPut]
+        // public Student? Update(Student student){
+        //     var studentDbo = _context.Students.Find(student.Id);
+
+        //     if(studentDbo == null) return null;
+
+        //     studentDbo.Name = student.Name;
+        //     _context.SaveChanges();
+        //     return studentDbo;
+        // }
+        // //Delete Student
+        // [HttpDelete("{id}")]
+        // public bool Delete(long id){
+        //     var studentDbo = _context.Students.Find(id);
+        //     if(studentDbo==null) return false;
+
+        //     _context.Students.Remove(studentDbo);
+        //     _context.SaveChanges();
+        //     return true;
+        // }
 
     }
 

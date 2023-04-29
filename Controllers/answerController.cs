@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NotasAPI.BusinessService;
 using NotasAPI.Modules;
 
 namespace NotasAPI.Controllers
@@ -11,56 +12,88 @@ namespace NotasAPI.Controllers
     [Route("[controller]")]
     public class AnswerController: ControllerBase
     {
-        private Context _context;
-        public AnswerController(Context context)
+        private AnswerBS _AnswerBS;
+        public AnswerController(AnswerBS AnswerBS)
         {
-            _context = context;
+            _AnswerBS = AnswerBS;
         }
-        // Get Beers
+        //Get todos
         [HttpGet]
-        public IEnumerable<Answer> Get(){
-            return _context.Answers.ToList();
+        public List<Answer> Get(){
+            return _AnswerBS.Get();
         }
-
-        //Get one beer
+        //Get by id
         [HttpGet("{id}")]
         public Answer? Get(long id){
-            var answer = _context.Answers.Find(id);
-            return answer;
+            return _AnswerBS.Get(id);
         }
-
         //Insert Beer
         [HttpPost]
-        public Answer Insert(Answer answer){
-            _context.Answers.Add(answer);
-            _context.SaveChanges();
-            return answer;
+        public Answer? Insert(Answer acDe){
+            return _AnswerBS.Insert(acDe);
         }
 
         //Update beer
         [HttpPut]
-        public Answer? Update(Answer answer){
-            var answerDbo = _context.Answers.Find(answer.Id);
-
-            if(answerDbo == null) return null;
-
-            answerDbo.Question = answer.Question;
-            answerDbo.IdStudent = answer.IdStudent;
-
-            _context.SaveChanges();
-            return answerDbo;
+        public Answer? Update(Answer acDe){
+            return _AnswerBS.Update(acDe);
         }
 
         //Delete beer
         [HttpDelete("{id}")]
         public bool Delete(long id){
-            var answerDbo = _context.Answers.Find(id);
-            if(answerDbo==null) return false;
-
-            _context.Answers.Remove(answerDbo);
-            _context.SaveChanges();
-            return true;
+            return _AnswerBS.Delete(id);
         }
+        // private Context _context;
+        // public AnswerController(Context context)
+        // {
+        //     _context = context;
+        // }
+        // // Get Beers
+        // [HttpGet]
+        // public IEnumerable<Answer> Get(){
+        //     return _context.Answers.ToList();
+        // }
+
+        // //Get one beer
+        // [HttpGet("{id}")]
+        // public Answer? Get(long id){
+        //     var answer = _context.Answers.Find(id);
+        //     return answer;
+        // }
+
+        // //Insert Beer
+        // [HttpPost]
+        // public Answer Insert(Answer answer){
+        //     _context.Answers.Add(answer);
+        //     _context.SaveChanges();
+        //     return answer;
+        // }
+
+        // //Update beer
+        // [HttpPut]
+        // public Answer? Update(Answer answer){
+        //     var answerDbo = _context.Answers.Find(answer.Id);
+
+        //     if(answerDbo == null) return null;
+
+        //     answerDbo.Question = answer.Question;
+        //     answerDbo.IdStudent = answer.IdStudent;
+
+        //     _context.SaveChanges();
+        //     return answerDbo;
+        // }
+
+        // //Delete beer
+        // [HttpDelete("{id}")]
+        // public bool Delete(long id){
+        //     var answerDbo = _context.Answers.Find(id);
+        //     if(answerDbo==null) return false;
+
+        //     _context.Answers.Remove(answerDbo);
+        //     _context.SaveChanges();
+        //     return true;
+        // }
  
 
         

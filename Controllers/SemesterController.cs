@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NotasAPI.BusinessService;
 using NotasAPI.Modules;
 
 namespace NotasAPI.Controllers
@@ -11,56 +12,88 @@ namespace NotasAPI.Controllers
     [Route("[controller]")]
     public class SemesterController:ControllerBase
     {
-        private Context _context;
-        public SemesterController(Context context)
+        private SemesterBS _SemesterBS;
+        public SemesterController(SemesterBS SemesterBS)
         {
-            _context = context;
+            _SemesterBS = SemesterBS;
         }
-        // Get Beers
+        //Get todos
         [HttpGet]
-        public IEnumerable<Semester> Get(){
-            return _context.Semesters.ToList();
+        public List<Semester> Get(){
+            return _SemesterBS.Get();
         }
-
-        //Get one beer
+        //Get by id
         [HttpGet("{id}")]
         public Semester? Get(long id){
-            var semester = _context.Semesters.Find(id);
-            return semester;
+            return _SemesterBS.Get(id);
         }
-
         //Insert Beer
         [HttpPost]
-        public Semester Insert(Semester semester){
-            _context.Semesters.Add(semester);
-            _context.SaveChanges();
-            return semester;
+        public Semester? Insert(Semester acDe){
+            return _SemesterBS.Insert(acDe);
         }
 
         //Update beer
         [HttpPut]
-        public Semester? Update(Semester semester){
-            var semesterDbo = _context.Semesters.Find(semester.Id);
-
-            if(semesterDbo == null) return null;
-
-            semesterDbo.Name = semester.Name;
-            semesterDbo.DateStart = semester.DateStart;
-            semesterDbo.DateFinish = semester.DateFinish;
-
-            _context.SaveChanges();
-            return semesterDbo;
+        public Semester? Update(Semester acDe){
+            return _SemesterBS.Update(acDe);
         }
 
         //Delete beer
         [HttpDelete("{id}")]
         public bool Delete(long id){
-            var semesterDbo = _context.Semesters.Find(id);
-            if(semesterDbo==null) return false;
-
-            _context.Semesters.Remove(semesterDbo);
-            _context.SaveChanges();
-            return true;
+            return _SemesterBS.Delete(id);
         }
+        // private Context _context;
+        // public SemesterController(Context context)
+        // {
+        //     _context = context;
+        // }
+        // // Get Beers
+        // [HttpGet]
+        // public IEnumerable<Semester> Get(){
+        //     return _context.Semesters.ToList();
+        // }
+
+        // //Get one beer
+        // [HttpGet("{id}")]
+        // public Semester? Get(long id){
+        //     var semester = _context.Semesters.Find(id);
+        //     return semester;
+        // }
+
+        // //Insert Beer
+        // [HttpPost]
+        // public Semester Insert(Semester semester){
+        //     _context.Semesters.Add(semester);
+        //     _context.SaveChanges();
+        //     return semester;
+        // }
+
+        // //Update beer
+        // [HttpPut]
+        // public Semester? Update(Semester semester){
+        //     var semesterDbo = _context.Semesters.Find(semester.Id);
+
+        //     if(semesterDbo == null) return null;
+
+        //     semesterDbo.Name = semester.Name;
+        //     semesterDbo.DateStart = semester.DateStart;
+        //     semesterDbo.DateFinish = semester.DateFinish;
+
+        //     _context.SaveChanges();
+        //     return semesterDbo;
+        // }
+
+        // //Delete beer
+        // [HttpDelete("{id}")]
+        // public bool Delete(long id){
+        //     var semesterDbo = _context.Semesters.Find(id);
+        //     if(semesterDbo==null) return false;
+
+        //     _context.Semesters.Remove(semesterDbo);
+        //     _context.SaveChanges();
+        //     return true;
+        // }
     }
 }

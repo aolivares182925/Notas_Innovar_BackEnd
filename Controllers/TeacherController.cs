@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NotasAPI.BusinessService;
 using NotasAPI.Modules;
 
 namespace NotasAPI.Controllers
@@ -11,55 +12,87 @@ namespace NotasAPI.Controllers
     [Route("[controller]")]
     public class TeacherController:ControllerBase
     {
-        private Context _context;
-        public TeacherController(Context context)
+        private TeacherBS _TeacherBS;
+        public TeacherController(TeacherBS TeacherBS)
         {
-            _context = context;
+            _TeacherBS = TeacherBS;
         }
-        // Get Beers
+        //Get todos
         [HttpGet]
-        public IEnumerable<Teacher> Get(){
-            return _context.Teachers.ToList();
+        public List<Teacher> Get(){
+            return _TeacherBS.Get();
         }
-
-        //Get one beer
+        //Get by id
         [HttpGet("{id}")]
         public Teacher? Get(long id){
-            var teacher = _context.Teachers.Find(id);
-            return teacher;
+            return _TeacherBS.Get(id);
         }
-
         //Insert Beer
         [HttpPost]
-        public Teacher Insert(Teacher teacher){
-            _context.Teachers.Add(teacher);
-            _context.SaveChanges();
-            return teacher;
+        public Teacher? Insert(Teacher acDe){
+            return _TeacherBS.Insert(acDe);
         }
 
         //Update beer
         [HttpPut]
-        public Teacher? Update(Teacher teacher){
-            var teacherDbo = _context.Teachers.Find(teacher.Id);
-
-            if(teacherDbo == null) return null;
-
-            teacherDbo.Name = teacher.Name;
-
-            _context.SaveChanges();
-            return teacherDbo;
+        public Teacher? Update(Teacher acDe){
+            return _TeacherBS.Update(acDe);
         }
 
         //Delete beer
         [HttpDelete("{id}")]
         public bool Delete(long id){
-            var teacherDbo = _context.Teachers.Find(id);
-            if(teacherDbo==null) return false;
-
-            _context.Teachers.Remove(teacherDbo);
-            _context.SaveChanges();
-            return true;
+            return _TeacherBS.Delete(id);
         }
+        // private Context _context;
+        // public TeacherController(Context context)
+        // {
+        //     _context = context;
+        // }
+        // // Get Beers
+        // [HttpGet]
+        // public IEnumerable<Teacher> Get(){
+        //     return _context.Teachers.ToList();
+        // }
+
+        // //Get one beer
+        // [HttpGet("{id}")]
+        // public Teacher? Get(long id){
+        //     var teacher = _context.Teachers.Find(id);
+        //     return teacher;
+        // }
+
+        // //Insert Beer
+        // [HttpPost]
+        // public Teacher Insert(Teacher teacher){
+        //     _context.Teachers.Add(teacher);
+        //     _context.SaveChanges();
+        //     return teacher;
+        // }
+
+        // //Update beer
+        // [HttpPut]
+        // public Teacher? Update(Teacher teacher){
+        //     var teacherDbo = _context.Teachers.Find(teacher.Id);
+
+        //     if(teacherDbo == null) return null;
+
+        //     teacherDbo.Name = teacher.Name;
+
+        //     _context.SaveChanges();
+        //     return teacherDbo;
+        // }
+
+        // //Delete beer
+        // [HttpDelete("{id}")]
+        // public bool Delete(long id){
+        //     var teacherDbo = _context.Teachers.Find(id);
+        //     if(teacherDbo==null) return false;
+
+        //     _context.Teachers.Remove(teacherDbo);
+        //     _context.SaveChanges();
+        //     return true;
+        // }
         
     }
 }
